@@ -147,23 +147,45 @@ const SettingsAccessStatusTypes = ({
     onDelete(selectedStatusType, kbId);
   };
 
-  const nameValidation = (value) => {
+  const isDuplicateName = (value, id) => value && accessTypesData.items.some(accessType => (
+    accessType.attributes.name === value && accessType.id !== id
+  ));
+
+  const getNameValidation = rowIndex => (value, allValues) => {
     if (!value) {
       return <FormattedMessage id="ui-eholdings.settings.accessStatusTypes.type.validation" />;
     }
 
-    if (value && value.length > SETTINGS_ACCESS_STATUS_TYPES_NAME_MAX_LENGTH) {
+    if (value.length > SETTINGS_ACCESS_STATUS_TYPES_NAME_MAX_LENGTH) {
       return <FormattedMessage
         id="ui-eholdings.settings.accessStatusTypes.validation"
         values={{ limit: SETTINGS_ACCESS_STATUS_TYPES_NAME_MAX_LENGTH }}
       />;
     }
 
-    if (value && accessTypesData.items.find(accessType => accessType.attributes.name === value)) {
+    const currentItemId = allValues?.items?.[rowIndex]?.id;
+
+    if (isDuplicateName(value, currentItemId)) {
       return <FormattedMessage id="ui-eholdings.settings.accessStatusTypes.validation.duplicate" />;
     }
 
     return null;
+  };
+
+  // EditableList performs this validation on save. Field-level validation is
+  // still needed so the error is shown as soon as the name field is blurred.
+  const validateItems = ({ items = [] }) => {
+    const errors = {};
+
+    items.forEach((item, index) => {
+      if (isDuplicateName(item.attributes?.name, item.id)) {
+        errors[index] = {
+          name: <FormattedMessage id="ui-eholdings.settings.accessStatusTypes.validation.duplicate" />,
+        };
+      }
+    });
+
+    return Object.keys(errors).length ? { items: errors } : {};
   };
 
   const descriptionValidation = (value) => {
@@ -242,9 +264,10 @@ const SettingsAccessStatusTypes = ({
         contentData={sortedItems}
         createButtonLabel={intl.formatMessage({ id: 'ui-eholdings.new' })}
         fieldComponents={{
-          name: item => renderField(item, nameValidation),
+          name: item => renderField(item, getNameValidation(item.rowIndex)),
           description: item => renderField(item, descriptionValidation),
         }}
+        validate={validateItems}
         formatter={formatter}
         label={intl.formatMessage({ id: 'ui-eholdings.settings.accessStatusTypes' })}
         onCreate={onCreateItem}

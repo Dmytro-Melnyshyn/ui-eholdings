@@ -236,7 +236,7 @@ describe('Given SettingsAccessStatusTypes', () => {
       const accessStatusTypeInput = getByRole('textbox', { name: 'ui-eholdings.settings.accessStatusTypes.type' });
       const saveButton = getByRole('button', { name: 'stripes-core.button.save' });
 
-      fireEvent.change(accessStatusTypeInput, { target: { value: 'test' } });
+      fireEvent.change(accessStatusTypeInput, { target: { value: 'new-test-access-type' } });
       fireEvent.blur(accessStatusTypeInput);
 
       fireEvent.click(saveButton);
@@ -246,6 +246,60 @@ describe('Given SettingsAccessStatusTypes', () => {
   });
 
   describe('when edit existing access status type', () => {
+    it('should not flag the existing name as a duplicate', () => {
+      const { getByRole, getByText, queryByText } = renderSettingsAccessStatusTypes({});
+
+      fireEvent.click(getByRole('button', { name: 'stripes-components.editThisItem' }));
+
+      const accessStatusTypeInput = getByRole('textbox', { name: 'ui-eholdings.settings.accessStatusTypes.type' });
+      fireEvent.blur(accessStatusTypeInput);
+
+      expect(queryByText('ui-eholdings.settings.accessStatusTypes.validation.duplicate')).toBeNull();
+      expect(getByText('stripes-core.button.save')).toBeDefined();
+    });
+
+    it('should prevent saving a name that duplicates another access status type', () => {
+      const duplicateAccessStatusType = {
+        ...accessTypesData.items[0],
+        id: 'another-test-id',
+        attributes: {
+          ...accessTypesData.items[0].attributes,
+          name: 'another-access-type',
+        },
+      };
+      const { getAllByRole, getByRole, getByText } = renderSettingsAccessStatusTypes({
+        props: {
+          accessTypesData: {
+            ...accessTypesData,
+            items: [...accessTypesData.items, duplicateAccessStatusType],
+          },
+          onUpdate: mockOnUpdate,
+        },
+        editableListFormProps: {
+          values: {
+            items: [{
+              ...formItems[0],
+              attributes: {
+                ...formItems[0].attributes,
+                name: 'test-access-type',
+              },
+            }, duplicateAccessStatusType],
+          },
+        },
+      });
+
+      fireEvent.click(getAllByRole('button', { name: 'stripes-components.editThisItem' })[1]);
+
+      const accessStatusTypeInput = getByRole('textbox', { name: 'ui-eholdings.settings.accessStatusTypes.type' });
+      fireEvent.change(accessStatusTypeInput, { target: { value: 'another-access-type' } });
+      fireEvent.blur(accessStatusTypeInput);
+
+      fireEvent.click(getByRole('button', { name: 'stripes-core.button.save' }));
+
+      expect(getByText('ui-eholdings.settings.accessStatusTypes.validation.duplicate')).toBeDefined();
+      expect(mockOnUpdate).not.toBeCalled();
+    });
+
     it('should handle onUpdate', () => {
       const [testFormItem] = formItems;
 
