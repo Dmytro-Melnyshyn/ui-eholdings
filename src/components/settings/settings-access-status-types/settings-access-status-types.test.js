@@ -246,6 +246,67 @@ describe('Given SettingsAccessStatusTypes', () => {
   });
 
   describe('when edit existing access status type', () => {
+    it('should not report the existing name as a duplicate on blur', () => {
+      const { getByRole, queryByText } = renderSettingsAccessStatusTypes({
+        editableListFormProps: {
+          values: {
+            items: formItems,
+          },
+        },
+      });
+
+      fireEvent.click(getByRole('button', { name: 'stripes-components.editThisItem' }));
+
+      const accessStatusTypeInput = getByRole('textbox', { name: 'ui-eholdings.settings.accessStatusTypes.type' });
+
+      fireEvent.blur(accessStatusTypeInput);
+
+      expect(queryByText('ui-eholdings.settings.accessStatusTypes.validation.duplicate')).toBeNull();
+    });
+
+    it('should prevent saving a duplicate name', () => {
+      const onUpdate = jest.fn();
+      const firstItem = formItems[0];
+      const secondItem = {
+        ...firstItem,
+        id: 'second-test-id',
+        attributes: {
+          ...firstItem.attributes,
+          name: 'another-access-type',
+        },
+      };
+      const duplicateAccessTypesData = {
+        ...accessTypesData,
+        items: [firstItem, secondItem],
+      };
+
+      const { getAllByRole, getByRole, getByText } = renderSettingsAccessStatusTypes({
+        editableListFormProps: {
+          values: {
+            items: [firstItem, secondItem],
+          },
+        },
+        props: {
+          accessTypesData: duplicateAccessTypesData,
+          onUpdate,
+        },
+      });
+
+      fireEvent.click(getAllByRole('button', { name: 'stripes-components.editThisItem' })[0]);
+
+      const accessStatusTypeInput = getByRole('textbox', { name: 'ui-eholdings.settings.accessStatusTypes.type' });
+      const saveButton = getByRole('button', { name: 'stripes-core.button.save' });
+
+      fireEvent.change(accessStatusTypeInput, { target: { value: firstItem.attributes.name } });
+      fireEvent.blur(accessStatusTypeInput);
+
+      expect(getByText('ui-eholdings.settings.accessStatusTypes.validation.duplicate')).toBeDefined();
+
+      fireEvent.click(saveButton);
+
+      expect(onUpdate).not.toHaveBeenCalled();
+    });
+
     it('should handle onUpdate', () => {
       const [testFormItem] = formItems;
 

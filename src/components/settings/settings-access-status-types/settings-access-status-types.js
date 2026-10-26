@@ -97,6 +97,8 @@ const SettingsAccessStatusTypes = ({
     records: ({ usageNumber }) => usageNumber || <NoValue />,
   };
 
+  const sortedItems = sortBy(accessTypesData?.items || [], [(item) => item.attributes.name.toLowerCase()]);
+
   // eslint-disable-next-line react/prop-types
   const renderField = ({ fieldIndex, rowIndex, name }, validate) => {
     const dataAttr = { [`data-test-settings-access-type-${name}-field`]: true };
@@ -104,6 +106,9 @@ const SettingsAccessStatusTypes = ({
     const labelTranslationId = isNameField
       ? 'ui-eholdings.settings.accessStatusTypes.type'
       : 'ui-eholdings.settings.accessStatusTypes.description';
+    const fieldValidate = isNameField
+      ? (value, values) => validate(value, values?.items?.[rowIndex]?.id)
+      : validate;
 
     return (
       <div
@@ -115,7 +120,7 @@ const SettingsAccessStatusTypes = ({
             <Field
               component={TextField}
               name={`items[${rowIndex}].attributes.${name}`}
-              validate={validate}
+              validate={fieldValidate}
               marginBottom0
               fullWidth
               autoFocus={isNameField}
@@ -147,19 +152,21 @@ const SettingsAccessStatusTypes = ({
     onDelete(selectedStatusType, kbId);
   };
 
-  const nameValidation = (value) => {
+  const nameValidation = (value, currentId) => {
     if (!value) {
       return <FormattedMessage id="ui-eholdings.settings.accessStatusTypes.type.validation" />;
     }
 
-    if (value && value.length > SETTINGS_ACCESS_STATUS_TYPES_NAME_MAX_LENGTH) {
+    if (value.length > SETTINGS_ACCESS_STATUS_TYPES_NAME_MAX_LENGTH) {
       return <FormattedMessage
         id="ui-eholdings.settings.accessStatusTypes.validation"
         values={{ limit: SETTINGS_ACCESS_STATUS_TYPES_NAME_MAX_LENGTH }}
       />;
     }
 
-    if (value && accessTypesData.items.find(accessType => accessType.attributes.name === value)) {
+    if (accessTypesData.items.find(accessType => (
+      accessType.id !== currentId && accessType.attributes.name === value
+    ))) {
       return <FormattedMessage id="ui-eholdings.settings.accessStatusTypes.validation.duplicate" />;
     }
 
@@ -177,7 +184,30 @@ const SettingsAccessStatusTypes = ({
     return null;
   };
 
-  const sortedItems = sortBy(accessTypesData?.items || [], [(item) => item.attributes.name.toLowerCase()]);
+  const validateItem = (item) => {
+    const attributes = {};
+    const errors = {};
+    const nameError = nameValidation(item?.attributes?.name, item?.id);
+    const descriptionError = descriptionValidation(item?.attributes?.description);
+
+    if (nameError) {
+      attributes.name = nameError;
+      errors.name = nameError;
+    }
+
+    if (descriptionError) {
+      attributes.description = descriptionError;
+      errors.description = descriptionError;
+    }
+
+    return Object.keys(attributes).length ? { ...errors, attributes } : {};
+  };
+
+  const validate = (values) => {
+    const items = (values?.items || []).map(validateItem);
+
+    return items.some(item => Object.keys(item).length) ? { items } : {};
+  };
 
   if (accessTypesData.isDeleted && !!selectedStatusType) {
     // access status type delete successful
@@ -251,6 +281,7 @@ const SettingsAccessStatusTypes = ({
         onDelete={showConfirmDialog}
         onSubmit={noop}
         onUpdate={onUpdateItem}
+        validate={validate}
         readOnlyFields={['lastUpdated', 'records']}
         visibleFields={['name', 'description', 'lastUpdated', 'records']}
         actionSuppression={{
