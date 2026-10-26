@@ -5,7 +5,7 @@
  * when there are any errors parsing it using `JSON.parse`, the text is
  * returned instead.
  */
-export default function (response) {
+export default function parseResponseBody(response) {
   return response.text().then((text) => {
     try { return JSON.parse(text); } catch (e) { return text; }
   });

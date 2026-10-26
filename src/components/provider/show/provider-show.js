@@ -205,7 +205,7 @@ class ProviderShow extends Component {
         onEdit={this.props.onEdit}
         isPermission={this.hasEditPermission()}
       >
-        <div data-testid='provider-content'>
+        <div data-testid="provider-content">
           <Toaster
             toasts={this.toasts}
             position="bottom"

@@ -25,9 +25,9 @@ const renderSettingsAssignedUsers = (props = {}) => render(
     <SettingsAssignedUsers
       alreadyAssignedMessageDisplayed={false}
       assignedUsers={assignedUsers}
-      credentialsId='credentials-id'
+      credentialsId="credentials-id"
       hideAlreadyAssignedMessage={() => {}}
-      knowledgeBaseName='Knowledge Base'
+      knowledgeBaseName="Knowledge Base"
       onDeleteUser={() => {}}
       onSelectUser={() => {}}
       requestIsPending={false}

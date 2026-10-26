@@ -28,7 +28,7 @@ export default {
     const params = {
       method,
       headers: getHeaders(method, okapi, url),
-      body: JSON.stringify({ data: customLabels, }),
+      body: JSON.stringify({ data: customLabels }),
     };
 
     return doRequest(url, params);

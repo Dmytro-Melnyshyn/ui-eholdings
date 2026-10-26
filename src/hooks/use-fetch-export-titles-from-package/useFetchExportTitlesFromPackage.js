@@ -42,7 +42,7 @@ const useFetchExportTitlesFromPackage = ({
 
     const calloutId = callout.sendCallout({
       type: 'success',
-      message: <FormattedMessage id='ui-eholdings.usageConsolidation.summary.exportTitles.progress' />,
+      message: <FormattedMessage id="ui-eholdings.usageConsolidation.summary.exportTitles.progress" />,
     });
 
     try {
@@ -62,7 +62,7 @@ const useFetchExportTitlesFromPackage = ({
 
       callout.sendCallout({
         type: 'success',
-        message: <FormattedMessage id='ui-eholdings.usageConsolidation.summary.exportTitles.success' />,
+        message: <FormattedMessage id="ui-eholdings.usageConsolidation.summary.exportTitles.success" />,
       });
     } catch (error) {
       callout.removeCallout(calloutId);

@@ -61,8 +61,8 @@ const SettingsCustomLabelsRoute = ({
         />
       ) : (
         <Icon
-          icon='spinner-ellipsis'
-          size='large'
+          icon="spinner-ellipsis"
+          size="large"
         />
       )}
     </TitleManager>

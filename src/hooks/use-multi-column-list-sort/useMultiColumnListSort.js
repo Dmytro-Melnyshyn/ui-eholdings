@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { sortOrders } from '../../constants';
 
-export default function (sortOrder, sortedColumn, onSortChange = () => {}) {
+export default function useMultiColumnListSort(sortOrder, sortedColumn, onSortChange = () => {}) {
   const [currentSortOrder, setCurrentSortOrder] = useState(sortOrder);
   const [currentColumn, setCurrentColumn] = useState(sortedColumn);
 

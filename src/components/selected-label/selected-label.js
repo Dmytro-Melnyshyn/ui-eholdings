@@ -42,8 +42,8 @@ const SelectedLabel = ({
   return (
     <AppIcon
       app={APP_ICON_NAME}
-      iconKey='selectedPackage'
-      size='small'
+      iconKey="selectedPackage"
+      size="small"
       className={cx({ 'not-selected': !isSelected })}
     >
       <span data-test-selected-label>

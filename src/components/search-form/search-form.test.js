@@ -106,7 +106,7 @@ describe('Given SearchForm', () => {
         });
 
         fireEvent.change(getByTestId('field-to-search-select'), {
-          target: { value: searchableIndexes.ISNX, },
+          target: { value: searchableIndexes.ISNX },
         });
 
         expect(mockOnSearchFieldChange).toHaveBeenCalled();

@@ -106,7 +106,7 @@ export class Collection {
    * @returns {Object} the request object
    */
   get request() {
-    const { page, ...queryParams } = this.params;
+    const { page: _page, ...queryParams } = this.params;
 
     // without including the page param, this will return the last
     // query request for any page of this collection
@@ -597,7 +597,7 @@ export default function model({ type, path } = {}) {
     const relTypes = {};
 
     // strip the constructor so not to override the BaseModel constructor
-    const { constructor, ...proto } = Object.getOwnPropertyDescriptors(Class.prototype);
+    const { constructor: _constructor, ...proto } = Object.getOwnPropertyDescriptors(Class.prototype);
 
     for (let i = 0, l = properties.length; i < l; i++) {
       const key = properties[i];

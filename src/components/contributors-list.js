@@ -55,7 +55,7 @@ const ContributorsList = ({
 
     return (
       <>
-        <FormattedMessage id='ui-eholdings.label.contributors' />
+        <FormattedMessage id="ui-eholdings.label.contributors" />
         &#58;&nbsp;
         <span data-test-eholdings-contributors-inline-list-item>
           {contributorsJointList}

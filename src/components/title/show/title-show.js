@@ -485,7 +485,7 @@ class TitleShow extends Component {
                     link={`/eholdings/resources/${item.id}`}
                     packageName={item.packageName}
                     item={item}
-                    headingLevel='h4'
+                    headingLevel="h4"
                   />
                 )}
               </ScrollView>

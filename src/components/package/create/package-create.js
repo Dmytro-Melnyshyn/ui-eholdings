@@ -139,7 +139,7 @@ const PackageCreate = ({
         decorators={[focusOnErrors]}
         mutators={{ ...arrayMutators }}
         onSubmit={onSubmit}
-        render={({ handleSubmit, pristine, }) => (
+        render={({ handleSubmit, pristine }) => (
           <div
             data-test-eholdings-package-create
             data-testid="data-test-eholdings-package-create"

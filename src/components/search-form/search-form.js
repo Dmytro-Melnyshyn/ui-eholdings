@@ -294,11 +294,11 @@ class SearchForm extends Component {
           <ButtonGroup
             data-test-search-form-type-switcher
             fullWidth
-            role='tablist'
+            role="tablist"
           >
             {validSearchTypes.map(type => (
               <Button
-                role='tab'
+                role="tab"
                 aria-selected={searchType === type}
                 aria-controls={type + '-panel'}
                 id={type + '-tab'}

@@ -7,7 +7,7 @@
  * @param {String} url - the request url
  * @returns {Object} headers for a new request
  */
-export default function (method, okapi, url) {
+export default function getHeaders(method, okapi, url) {
   const headers = {
     'Content-Type': 'application/json',
     'X-Okapi-Tenant': okapi.tenant,

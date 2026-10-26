@@ -25,7 +25,7 @@ export default {
     const params = {
       method,
       headers: getHeaders(method, okapi, url),
-      body: JSON.stringify({ data: rootProxy, }),
+      body: JSON.stringify({ data: rootProxy }),
     };
 
     return doRequest(url, params);

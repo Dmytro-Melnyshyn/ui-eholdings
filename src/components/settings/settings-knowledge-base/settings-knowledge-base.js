@@ -220,7 +220,7 @@ const SettingsKnowledgeBase = ({
           buttonStyle="danger"
           onClick={onDeleteConfirmation(kbId)}
           data-test-confirm-delete-kb-credentials
-          data-testid='confirm-delete-button'
+          data-testid="confirm-delete-button"
         >
           <FormattedMessage id="ui-eholdings.settings.kb.delete" />
         </Button>

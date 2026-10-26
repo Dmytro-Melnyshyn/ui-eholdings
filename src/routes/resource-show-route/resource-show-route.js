@@ -185,7 +185,7 @@ class ResourceShowRoute extends Component {
     } = this.props;
 
     if (model.isLoading) {
-      return <Icon icon='spinner-ellipsis' />;
+      return <Icon icon="spinner-ellipsis" />;
     }
 
     return (

@@ -120,7 +120,7 @@ export default class SettingsForm extends Component {
             footer={hasFooter && this.renderFooter()}
           >
             <Toaster
-              position='bottom'
+              position="bottom"
               toasts={toasts}
             />
 

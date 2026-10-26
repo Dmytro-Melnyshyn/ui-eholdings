@@ -240,7 +240,8 @@ describe('Given PackageShow', () => {
 
   describe('when the model has no tags', () => {
     it('should not throw', () => {
-      const { tags, ...modelWithoutTags } = testModel;
+      const modelWithoutTags = { ...testModel };
+      delete modelWithoutTags.tags;
 
       expect(() => renderPackageShow({ model: modelWithoutTags })).not.toThrow();
     });

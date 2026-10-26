@@ -74,7 +74,7 @@ const EditHoldingStatus = ({
         htmlFor="managed-resource-holding-status"
       >
         {model.update.isPending ? (
-          <Icon icon='spinner-ellipsis' />
+          <Icon icon="spinner-ellipsis" />
         )
           : (
             <Headline margin="none">

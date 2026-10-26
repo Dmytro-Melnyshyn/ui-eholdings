@@ -65,7 +65,7 @@ const CustomLabelField = ({ name }) => {
               data-testid={`${name}-publication-finder`}
               component={Checkbox}
               name={`${name}.displayOnPublicationFinder`}
-              type='checkbox'
+              type="checkbox"
               aria-label={label}
               disabled={disabled}
             />
@@ -79,7 +79,7 @@ const CustomLabelField = ({ name }) => {
               data-testid={`${name}-text-finder`}
               component={Checkbox}
               name={`${name}.displayOnFullTextFinder`}
-              type='checkbox'
+              type="checkbox"
               aria-label={label}
               disabled={disabled}
             />

@@ -42,7 +42,7 @@ const renderKeyShortcutsWrapper = ({
       focusSearchField={focusSearchField}
       openCreateNewEntity={openCreateNewEntity}
     >
-      <div data-testid='data-test-wrapper-children'>
+      <div data-testid="data-test-wrapper-children">
         Test
       </div>
     </KeyShortcutsWrapper>

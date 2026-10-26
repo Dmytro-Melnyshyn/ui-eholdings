@@ -108,7 +108,7 @@ const SettingsCustomLabels = ({
 
     if (isUpdated) {
       return [{
-        message: <FormattedMessage id='ui-eholdings.settings.customLabels.toast' />,
+        message: <FormattedMessage id="ui-eholdings.settings.customLabels.toast" />,
         type: 'success',
         id: `update-custom-labels-success-${Date.now()}`,
       }];
@@ -156,11 +156,11 @@ const SettingsCustomLabels = ({
             </Col>
           </Row>
 
-          <CustomLabelField name='customLabel1' />
-          <CustomLabelField name='customLabel2' />
-          <CustomLabelField name='customLabel3' />
-          <CustomLabelField name='customLabel4' />
-          <CustomLabelField name='customLabel5' />
+          <CustomLabelField name="customLabel1" />
+          <CustomLabelField name="customLabel2" />
+          <CustomLabelField name="customLabel3" />
+          <CustomLabelField name="customLabel4" />
+          <CustomLabelField name="customLabel5" />
 
           <NavigationModal
             label={<FormattedMessage id="ui-eholdings.navModal.areYouSure" />}

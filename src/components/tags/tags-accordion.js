@@ -56,7 +56,7 @@ class TagsAccordion extends Component {
         id={id}
         onToggle={onToggle}
         displayWhenClosed={
-          <Badge sixe='small'>
+          <Badge sixe="small">
             <span data-testid="tags-accordion-tags-length">
               <FormattedNumber value={entityTags.length} />
             </span>
